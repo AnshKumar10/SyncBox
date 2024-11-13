@@ -34,7 +34,12 @@ const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
       )}
     >
       <div className="flex flex-col flex-1">
-        <div className="flex h-16 items-center justify-between px-4 py-4">
+        <div
+          className={cn(
+            "flex h-16 items-center p-4",
+            isCollapsed ? "justify-center" : "justify-between"
+          )}
+        >
           {!isCollapsed && (
             <>
               <Link href="/" className="flex items-center gap-2">
@@ -43,21 +48,18 @@ const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
               </Link>
             </>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-          >
+          <Button size="icon" className="h-10 w-10" variant="ghost" onClick={() => setIsCollapsed(!isCollapsed)}>
             <ChevronLeft
+              width={20}
+              height={20}
               className={cn(
-                "h-4 w-4 text-gray-500 transition-transform",
+                "text-gray-500 transition-transform",
                 isCollapsed && "rotate-180"
               )}
             />
           </Button>
         </div>
-        <nav className="flex-1 space-y-1 px-3 py-4">
+        <nav className="flex-1 space-y-2 px-3 py-4 bg-gray-50 rounded-lg">
           <TooltipProvider delayDuration={0}>
             {SIDEBAR_TABS.map((item) => {
               const isActive = pathname === item.url;
@@ -67,10 +69,10 @@ const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
                     <Link
                       href={item.url}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                        "flex items-center gap-3 rounded-lg p-4 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-blue-50 text-blue-600"
-                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          ? "bg-blue-100 text-blue-600 shadow-md hover:bg-blue-200"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       )}
                     >
                       <item.icon
@@ -79,11 +81,17 @@ const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
                           isActive ? "text-blue-600" : "text-gray-500"
                         )}
                       />
-                      {!isCollapsed && <span>{item.name}</span>}
+                      {!isCollapsed && (
+                        <span className="ml-2">{item.name}</span>
+                      )}
                     </Link>
                   </TooltipTrigger>
                   {isCollapsed && (
-                    <TooltipContent side="right">{item.name}</TooltipContent>
+                    <TooltipContent side="right">
+                      <span className="text-gray-800 font-semibold">
+                        {item.name}
+                      </span>
+                    </TooltipContent>
                   )}
                 </Tooltip>
               );
@@ -113,9 +121,9 @@ const Sidebar = ({ fullName, avatar, email }: SidebarProps) => {
               onClick={signOutUser}
               variant="ghost"
               size="icon"
-              className="h-8 w-8"
+              className="border border-red-500 rounded-full text-red-500 hover:bg-red-500 hover:text-white"
             >
-              <LogOut className="h-4 w-4 text-gray-500" />
+              <LogOut width={20} height={20} />
             </Button>
           )}
         </div>
