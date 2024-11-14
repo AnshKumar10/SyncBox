@@ -12,10 +12,8 @@ const Header = ({
     <header className="w-full border-b border-gray-200 bg-white">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex-1 relative">
-            <div className="relative">
-              <SearchBar />
-            </div>
+          <div className="flex-1 relative w-full">
+            <SearchBar />
           </div>
           <div className="flex items-center gap-4">
             <FileUploader ownerId={userId} accountId={accountId} />
