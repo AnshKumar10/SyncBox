@@ -3,6 +3,8 @@
 import { Account, Avatars, Client, Databases, Storage } from "node-appwrite";
 import { appwriteConfig } from "./config";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { RouteUrls } from "../enums";
 
 export const createSessionClient = async () => {
   const client = new Client()
@@ -11,7 +13,7 @@ export const createSessionClient = async () => {
 
   const session = (await cookies()).get("appwrite-session");
 
-  if (!session || !session.value) throw new Error("No session");
+  if (!session || !session.value) redirect(RouteUrls.SIGN_IN);
 
   client.setSession(session.value);
 
