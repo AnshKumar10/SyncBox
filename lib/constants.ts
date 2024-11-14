@@ -1,4 +1,15 @@
-import { FileText, Film, Home, Image, MoreHorizontal } from "lucide-react";
+import {
+  Download,
+  Edit,
+  FileText,
+  Film,
+  Home,
+  Image,
+  Info,
+  MoreHorizontal,
+  Share,
+  Trash,
+} from "lucide-react";
 
 export const SIDEBAR_TABS = [
   {
@@ -29,3 +40,31 @@ export const SIDEBAR_TABS = [
 ];
 
 export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+
+export const DROPDOWN_ACTION_MENU_OPTIONS = [
+  {
+    label: "Rename",
+    icon: Edit,
+    value: "rename",
+  },
+  {
+    label: "Details",
+    icon: Info,
+    value: "details",
+  },
+  {
+    label: "Share",
+    icon: Share,
+    value: "share",
+  },
+  {
+    label: "Download",
+    icon: Download,
+    value: "download",
+  },
+  {
+    label: "Delete",
+    icon: Trash,
+    value: "delete",
+  },
+];

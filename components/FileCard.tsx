@@ -4,6 +4,7 @@ import Thumbnail from "@/components/Thumbnail";
 import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "@/components/FormattedDateTime";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import ActionDropdown from "./ActionDropdown";
 
 const FileCard = ({ file }: { file: Models.Document }) => {
   return (
@@ -19,6 +20,7 @@ const FileCard = ({ file }: { file: Models.Document }) => {
             <p className="text-sm text-gray-500">
               {convertFileSize(file.size)}
             </p>
+            <ActionDropdown file={file} />
           </div>
         </CardHeader>
         <CardContent>

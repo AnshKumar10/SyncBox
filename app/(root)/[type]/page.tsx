@@ -2,14 +2,28 @@ import React from "react";
 import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import FileCard from "@/components/FileCard";
+import { getFileTypesParams } from "@/lib/utils";
 
-const Page = async () => {
-  const files = await getFiles();
+interface SearchParamProps {
+  params?: Promise<{
+    type?: string;
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+const Page = async ({ searchParams, params }: SearchParamProps) => {
+  const type = ((await params)?.type as string) || "";
+  const searchText = ((await searchParams)?.query as string) || "";
+  const sort = ((await searchParams)?.sort as string) || "";
+
+  const types = getFileTypesParams(type);
+
+  const files = await getFiles({ types, searchText, sort });
 
   return (
     <div className="py-8 px-4 sm:px-6 lg:px-8">
       <section className="w-full">
-        <h1 className="text-2xl font-bold capitalize mb-4">All</h1>
+        <h1 className="text-2xl font-bold capitalize mb-4">{type}</h1>
         <div className="flex justify-between items-center mb-6">
           <p className="text-base">
             Total: <span className="text-xl font-medium">0 MB</span>

@@ -13,3 +13,22 @@ export interface GetFilesPropsInterface {
   sort?: string;
   limit?: number;
 }
+
+export interface RenameFilePropsInterface {
+  fileId: string;
+  name: string;
+  extension: string;
+  path: string;
+}
+
+export interface UpdateFileUsersPropsInterface {
+  fileId: string;
+  emails: string[];
+  path: string;
+}
+
+export interface DeleteFilePropsInterface {
+  fileId: string;
+  bucketFileId: string;
+  path: string;
+}

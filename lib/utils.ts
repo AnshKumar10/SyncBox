@@ -175,7 +175,7 @@ export const convertFileSize = (sizeInBytes: number, digits?: number) => {
   }
 };
 
-export const getFileTypesParams = (type: string) => {
+export const getFileTypesParams = (type: string): FileType[] => {
   switch (type) {
     case "documents":
       return ["document"];
