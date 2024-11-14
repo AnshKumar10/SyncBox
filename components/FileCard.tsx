@@ -32,7 +32,7 @@ const FileCard = ({ file }: { file: Models.Document }) => {
       <Link href={file.url} target="_blank" className="block p-4">
         <div className="space-y-3">
           <div className="space-y-1">
-            <h3 className="line-clamp-1 font-medium text-gray-900 group-hover:text-blue-600">
+            <h3 className="line-clamp-2 font-medium text-gray-900 group-hover:text-blue-600">
               {file.name}
             </h3>
             <p className="text-xs text-gray-500">

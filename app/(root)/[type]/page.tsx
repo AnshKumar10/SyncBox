@@ -3,6 +3,7 @@ import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import FileCard from "@/components/FileCard";
 import { getFileTypesParams } from "@/lib/utils";
+import Sort from "@/components/Sort";
 
 interface SearchParamProps {
   params?: Promise<{
@@ -29,12 +30,12 @@ const Page = async ({ searchParams, params }: SearchParamProps) => {
             Total: <span className="text-xl font-medium">0 MB</span>
           </p>
           <div className="hidden sm:flex items-center space-x-2">
-            <p className="text-base text-gray-500">Sort by:</p>
-            {/* <Sort /> */}
+            <p className="text-base text-gray-500 whitespace-nowrap">Sort by:</p>
+            <Sort />
           </div>
         </div>
         {files.total > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {files.documents.map((file: Models.Document) => (
               <div key={file.$id} className="w-full">
                 <FileCard file={file} />
