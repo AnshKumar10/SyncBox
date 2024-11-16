@@ -1,8 +1,8 @@
 import React from "react";
-import { getFiles } from "@/lib/actions/file.actions";
+import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import FileCard from "@/components/FileCard";
-import { getFileTypesParams } from "@/lib/utils";
+import { convertFileSize, getFileTypesParams } from "@/lib/utils";
 import Sort from "@/components/Sort";
 
 interface SearchParamProps {
@@ -21,16 +21,23 @@ const Page = async ({ searchParams, params }: SearchParamProps) => {
 
   const files = await getFiles({ types, searchText, sort });
 
+  const totalSpace = await getTotalSpaceUsed();
+
   return (
     <div className="py-8 px-4 sm:px-6 lg:px-8">
       <section className="w-full">
         <h1 className="text-2xl font-bold capitalize mb-4">{type}</h1>
         <div className="flex justify-between items-center mb-6">
           <p className="text-base">
-            Total: <span className="text-xl font-medium">0 MB</span>
+            Total:{" "}
+            <span className="text-xl font-medium">
+              {convertFileSize(totalSpace?.[types[0]]?.size)}
+            </span>
           </p>
           <div className="hidden sm:flex items-center space-x-2">
-            <p className="text-base text-gray-500 whitespace-nowrap">Sort by:</p>
+            <p className="text-base text-gray-500 whitespace-nowrap">
+              Sort by:
+            </p>
             <Sort />
           </div>
         </div>

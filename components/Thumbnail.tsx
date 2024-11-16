@@ -4,7 +4,7 @@ import { cn, getFileIcon } from "@/lib/utils";
 
 interface Props {
   type: string;
-  extension: string;
+  extension?: string;
   url?: string;
   imageClassName?: string;
 }
@@ -19,7 +19,7 @@ export const Thumbnail = ({
 
   return (
     <Image
-      src={isImage ? url : getFileIcon(extension, type)}
+      src={isImage && url ? url : getFileIcon(extension, type)}
       alt="thumbnail"
       width={100}
       height={100}

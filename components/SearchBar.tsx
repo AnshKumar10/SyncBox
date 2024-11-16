@@ -13,15 +13,16 @@ import { cn } from "@/lib/utils";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("query") || "";
   const [results, setResults] = useState<Models.Document[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("query") || "";
+
   const router = useRouter();
   const path = usePathname();
-  
+
   const [debouncedQuery] = useDebounce(query, 300);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +47,7 @@ const SearchBar = () => {
     };
 
     fetchFiles();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery]);
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const SearchBar = () => {
         <Input
           value={query}
           placeholder="Search files..."
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(event) => setQuery(event.target.value)}
           className="w-full pl-10 pr-4 focus-visible:ring-blue-500"
           onFocus={() => {
             if (results.length > 0) setOpen(true);
@@ -103,12 +104,12 @@ const SearchBar = () => {
           "absolute mt-2 w-full rounded-lg border border-gray-200 bg-white shadow-lg",
           "transition-all duration-200 ease-in-out",
           open
-            ? "visible opacity-100 translate-y-0"
+            ? "visible opacity-100 translate-y-0 z-10"
             : "invisible opacity-0 -translate-y-2"
         )}
       >
         {open && (
-          <ul className="max-h-[400px] overflow-y-auto py-2 search-results-scroll">
+          <ul className="max-h-[400px] overflow-y-auto py-2">
             {loading ? (
               <li className="px-4 py-8">
                 <div className="flex flex-col items-center justify-center gap-3">

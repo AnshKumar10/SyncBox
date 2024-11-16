@@ -32,3 +32,18 @@ export interface DeleteFilePropsInterface {
   bucketFileId: string;
   path: string;
 }
+
+interface StorageFileTypeInterface {
+  size: number; // The size in bytes
+  latestDate: string;
+}
+
+export interface StorageInfoInterface {
+  image: StorageFileTypeInterface;
+  document: StorageFileTypeInterface;
+  video: StorageFileTypeInterface;
+  audio: StorageFileTypeInterface;
+  other: StorageFileTypeInterface;
+  used: number;
+  all: number;
+}

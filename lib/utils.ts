@@ -1,4 +1,4 @@
-import { FileType } from "@/types/files";
+import { FileType, StorageInfoInterface } from "@/types/files";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -188,4 +188,54 @@ export const getFileTypesParams = (type: string): FileType[] => {
     default:
       return ["document"];
   }
+};
+
+export const calculatePercentage = (sizeInBytes: number) => {
+  const totalSizeInBytes = 2 * 1024 * 1024 * 1024; // 2GB in bytes
+  const percentage = (sizeInBytes / totalSizeInBytes) * 100;
+  return Number(percentage.toFixed(2));
+};
+
+export const getUsageSummary = (
+  totalSpace: StorageInfoInterface
+): {
+  title: string;
+  size: number;
+  latestDate: string;
+  icon: string;
+  url: string;
+}[] => {
+  return [
+    {
+      title: "Documents",
+      size: totalSpace.document.size,
+      latestDate: totalSpace.document.latestDate,
+      icon: "document",
+      url: "/documents",
+    },
+    {
+      title: "Images",
+      size: totalSpace.image.size,
+      latestDate: totalSpace.image.latestDate,
+      icon: "image",
+      url: "/images",
+    },
+    {
+      title: "Media",
+      size: totalSpace.video.size + totalSpace.audio.size,
+      latestDate:
+        totalSpace.video.latestDate > totalSpace.audio.latestDate
+          ? totalSpace.video.latestDate
+          : totalSpace.audio.latestDate,
+      icon: "video",
+      url: "/media",
+    },
+    {
+      title: "Others",
+      size: totalSpace.other.size,
+      latestDate: totalSpace.other.latestDate,
+      icon: "other",
+      url: "/others",
+    },
+  ];
 };
