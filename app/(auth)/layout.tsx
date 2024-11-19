@@ -1,25 +1,25 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import { CloudIcon, LockIcon, ShareIcon } from "lucide-react";
+import { CloudIcon, DatabaseIcon, UploadIcon } from "lucide-react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const features = [
     {
-      title: "Secure Storage",
-      description:
-        "Enterprise-grade encryption keeps your files safe and secure",
-      icon: <LockIcon className="text-3xl text-white" />,
-    },
-    {
-      title: "Easy Sharing",
-      description: "Share files and folders with customizable access controls",
-      icon: <ShareIcon className="text-3xl text-white" />,
-    },
-    {
       title: "Anywhere Access",
       description: "Access your files from any device, anytime, anywhere",
       icon: <CloudIcon className="text-3xl text-white" />,
+    },
+    {
+      title: "Easy Upload and Sharing",
+      description: "Quickly upload and share your files",
+      icon: <UploadIcon className="text-3xl text-white" />,
+    },
+    {
+      title: "Free Storage (Up to 2GB)",
+      description:
+        "Enjoy up to 2GB of free storage to keep your files safe without worry",
+      icon: <DatabaseIcon className="text-3xl text-white" />,
     },
   ];
 
