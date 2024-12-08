@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Models } from "node-appwrite";
-import { FileIcon } from "lucide-react";
+import { FileIcon, HardDrive } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Chart } from "@/components/Chart";
 import { FormattedDateTime } from "@/components/FormattedDateTime";
 import { Thumbnail } from "@/components/Thumbnail";
 import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.actions";
@@ -16,89 +15,124 @@ const Dashboard = async () => {
     getTotalSpaceUsed(),
   ]);
 
+  const totalStorage = 2 * 1024 * 1024 * 1024; // 2GB in bytes
   const usageSummary = getUsageSummary(totalSpace);
 
   return (
-    <div className="container mx-auto p-4 lg:p-6 space-y-6 lg:space-y-8">
-      <div className="grid gap-4 lg:gap-6 md:grid-cols-2">
-        <Card className="md:min-h-[400px] bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-xl lg:text-2xl font-semibold">
-              Storage Overview
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-center h-full">
-              <Chart used={totalSpace.used} />
+    <div className="container mx-auto p-6 space-y-8 lg:space-y-10">
+      {/* Storage Details Card */}
+      <Card className="bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-3xl overflow-hidden">
+        <CardContent className="px-6 py-4">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-medium text-gray-800 flex items-center gap-3">
+                <HardDrive className="w-6 h-6 text-blue-600" />
+                Storage Details
+              </CardTitle>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="md:min-h-[400px] bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-xl lg:text-2xl font-semibold">
-              File Types
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
-              {usageSummary.map((summary) => (
-                <Link
-                  href={summary.url}
-                  key={summary.title}
-                  className="group rounded-lg p-3 lg:p-4 transition-all hover:bg-accent hover:shadow-md"
-                >
-                  <div className="flex items-center justify-between mb-2 lg:mb-3">
-                    <Thumbnail type={summary.icon} />
-                    <span className="text-sm lg:text-base font-medium">
-                      {convertFileSize(summary.size) || "0"}
-                    </span>
-                  </div>
-                  <h4 className="text-sm lg:text-base font-medium mb-2">
-                    {summary.title}
-                  </h4>
-                  <Separator className="my-2" />
-                  <FormattedDateTime
-                    date={summary.latestDate}
-                    className="text-xs lg:text-sm text-muted-foreground"
-                  />
-                </Link>
-              ))}
+            <div className="flex justify-between items-center">
+              <div className="space-y-2 w-2/3">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                  <span className="text-sm text-gray-600">Used Space</span>
+                </div>
+                <p className="text-gray-800 font-semibold">
+                  {totalSpace.used ? convertFileSize(totalSpace.used) : "0MB"}
+                </p>
+              </div>
+              <div className="w-1/3">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-3 h-3 rounded-full bg-gray-200"></div>
+                  <span className="text-sm text-gray-600">Available</span>
+                </div>
+                <p className="text-gray-800 font-semibold">
+                  {convertFileSize(totalStorage - totalSpace.used)}
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-      <Card className="bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-xl lg:text-2xl font-semibold">
-            Recent Files
-          </CardTitle>
+
+            {/* Storage Progress Bar */}
+            <div className="h-2 bg-gray-200 rounded-full mt-4">
+              <div
+                className="h-2 bg-blue-500 rounded-full"
+                style={{
+                  width: `${(totalSpace.used / totalStorage) * 100}%`,
+                }}
+              ></div>
+            </div>
+            <div className="flex justify-between mt-4 text-sm text-gray-500">
+              <span>Total Storage: 2GB</span>
+              <span>
+                {totalSpace.used ? convertFileSize(totalSpace.used) : "0MB"}{" "}
+                used
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* File Types Summary Card */}
+      <Card className="bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-3xl overflow-hidden">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold">File Types</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            {usageSummary.map((summary) => (
+              <Link
+                href={summary.url}
+                key={summary.title}
+                className="group rounded-lg p-4 transition-all hover:bg-blue-100 hover:shadow-lg"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <Thumbnail type={summary.icon} />
+                  <span className="text-lg font-medium text-gray-800">
+                    {convertFileSize(summary.size) || "0"}
+                  </span>
+                </div>
+                <h4 className="text-lg font-semibold mb-2">{summary.title}</h4>
+                <Separator className="my-2" />
+                <FormattedDateTime
+                  date={summary.latestDate}
+                  className="text-sm text-muted-foreground"
+                />
+              </Link>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Recent Files Card */}
+      <Card className="bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-3xl overflow-hidden">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold">Recent Files</CardTitle>
         </CardHeader>
         <CardContent>
           {files.documents.length > 0 ? (
-            <div className="space-y-3 lg:space-y-4">
+            <div className="space-y-4">
               {files.documents.map((file: Models.Document) => (
                 <div
                   key={file.$id}
-                  className="flex items-center justify-between p-2 lg:p-3 rounded-lg hover:bg-accent transition-colors group"
+                  className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-100 transition-colors group"
                 >
                   <Link
                     href={file.url}
                     target="_blank"
-                    className="flex items-center flex-1 gap-3 min-w-0"
+                    className="flex items-center flex-1 gap-4"
                   >
                     <Thumbnail
                       type={file.type}
                       extension={file.extension}
                       url={file.url}
-                      imageClassName="w-10 h-10 lg:w-12 lg:h-12"
+                      imageClassName="w-12 h-12 lg:w-16 lg:h-16"
                     />
                     <div className="flex flex-col min-w-0 flex-1">
-                      <p className="text-sm lg:text-base font-medium truncate">
+                      <p className="text-lg font-medium truncate">
                         {file.name}
                       </p>
                       <FormattedDateTime
                         date={file.$createdAt}
-                        className="text-xs lg:text-sm text-muted-foreground"
+                        className="text-sm text-muted-foreground"
                       />
                     </div>
                   </Link>
@@ -110,9 +144,9 @@ const Dashboard = async () => {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-12 lg:py-16 text-center">
-              <FileIcon className="h-12 w-12 lg:h-16 lg:w-16 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground text-sm lg:text-base">
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <FileIcon className="h-16 w-16 text-muted-foreground mb-6" />
+              <p className="text-muted-foreground text-lg">
                 No files uploaded yet
               </p>
             </div>
