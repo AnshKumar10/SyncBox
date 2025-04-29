@@ -9,6 +9,15 @@ Welcome to **SyncBox**, the modern cloud storage solution built for convenience,
 
 ---
 
+## 📸 Screenshots
+
+![image](https://github.com/user-attachments/assets/3ce03561-a902-4625-9262-7ab8188e8ca3)
+![image](https://github.com/user-attachments/assets/4e8ae455-f92f-4605-a2c0-1a1c15ce33b4)
+![image](https://github.com/user-attachments/assets/bdff8c9a-18a4-4d23-ab4e-0ba8cec5f8f5)
+
+
+---
+
 ## ❓ Why Choose SyncBox?
 
 SyncBox is more than just a storage platform. It’s built to deliver a secure and modern user experience with powerful tools that support your workflow. With a clean UI and robust features under the hood, SyncBox is the perfect choice for individuals, professionals, and teams looking for a sleek file management experience.
@@ -65,15 +74,6 @@ The UI is powered by **ShadCN components** and **Radix UI primitives**, offering
 - 🧹 ESLint + Prettier for code formatting
 - ✨ TypeScript for static typing
 - 🚀 Optimized dev experience with Next.js’ file routing and Vercel-ready output
-
----
-
-## 📸 Screenshots (Coming Soon)
-
-![image](https://github.com/user-attachments/assets/3ce03561-a902-4625-9262-7ab8188e8ca3)
-![image](https://github.com/user-attachments/assets/4e8ae455-f92f-4605-a2c0-1a1c15ce33b4)
-![image](https://github.com/user-attachments/assets/bdff8c9a-18a4-4d23-ab4e-0ba8cec5f8f5)
-
 
 
 ---
